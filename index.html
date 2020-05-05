@@ -12,16 +12,27 @@
     <title>Code Quiz</title>
   </head>
   <body>
-    <section class="container">
-      <h2>Coding Quiz Challenge</h2>
-      <p>
-        This is a timed coding quiz. You can always see your time remaining in
-        the top right corner. If you answer a question incorrectly, five seconds
-        will be deducted. At the end you may submit your name for the
-        leaderboard.
-      </p>
-      <button type="button" class="btn btn-dark">Start</button>
-    </section>
-    <script src="./assets/js/script.js"></script>
+    <body>
+        <section class="container-sm">
+          <section class="card text-center">
+            <header class="card-header outer">
+              <h1>Coding Quiz Challenge</h1>
+            </header>
+            <article class="card-body">
+              <p class="card-text">
+                This is a timed coding quiz. You can always see your time remaining
+            in the top right corner. If you answer a question incorrectly, five
+            seconds will be deducted. At the end, you may submit your name for
+            the leaderboard.
+              </p>
+              
+              <button class="btn btn-primary" id="generate">
+                Start
+              </button>
+            </article>
+          </section>
+        </section>
+        <script src="./assets/js/generator.js"></script>
+      
   </body>
 </html>
