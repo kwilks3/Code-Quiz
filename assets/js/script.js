@@ -2,7 +2,41 @@
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var secondsLeft = 75;
-
+//array of test questions
+var testBank = [
+  {
+    question: "What is the HTML tag under which one can write JavaScript code?",
+    answers: {
+      a: "<javascript>",
+      b: "<scripted>",
+      c: "<script>",
+      d: "<js>",
+    },
+    correctAnswer: "c",
+  },
+  {
+    question:
+      "Which of the following is the correct syntax to display “I am the GOAT” in an alert box using JavaScript?",
+    answers: {
+      a: "alertbox(“I am the GOAT”);",
+      b: "msg(“I am the GOAT”);",
+      c: "msgbox(“I am the GOAT”);",
+      d: "alert(“I am the GOAT”)",
+    },
+    correctAnswer: "d",
+  },
+  {
+    question:
+      "What is the correct syntax for referring to an external script called “geek.js”",
+    answers: {
+      a: "<script src=”geek.js”>;",
+      b: "<script href=”geek.js”>",
+      c: "<script ref=”geek.js”>",
+      d: "<script name=”geek.js”>",
+    },
+    correctAnswer: "a",
+  },
+];
 function timer() {
   var timerInterval = setInterval(function () {
     secondsLeft = secondsLeft - 1;
