@@ -1,5 +1,6 @@
 //create timer that starts on click of start button
 var timeEl = document.querySelector("#time");
+var start = document.querySelector("#generate");
 var secondsLeft = 75;
 
 function timer() {
@@ -10,7 +11,7 @@ function timer() {
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
     }
-  , 1000});
+  }, 1000);
 }
 //output first question on start button click
 //create loop for answering questions and outputting new questions
@@ -19,3 +20,5 @@ function timer() {
 //when all questions are answered or timer is 0 end quiz
 // ask for initials
 // display scoreboard with initials and scores
+
+start.addEventListener("click", timer);
