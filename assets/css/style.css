@@ -2,3 +2,10 @@
   position: relative;
   margin-top: 10%;
 }
+
+#time {
+  display: flex;
+  justify-content: flex-end;
+  color: red;
+  margin-right: 10%;
+}
