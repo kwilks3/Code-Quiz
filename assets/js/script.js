@@ -9,12 +9,14 @@ var optionB = document.createElement("button");
 var optionC = document.createElement("button");
 var optionD = document.createElement("button");
 var secondsLeft = 75;
-var score;
+var score = 0;
 
 optionA.setAttribute("class", "btn btn-primary");
 optionB.setAttribute("class", "btn btn-primary");
 optionC.setAttribute("class", "btn btn-primary");
 optionD.setAttribute("class", "btn btn-primary");
+
+var i;
 //array of test questions
 var testBank = [
   {
@@ -61,7 +63,7 @@ function timer() {
   askQuestions();
 }
 function askQuestions() {
-  for (var i = 0; i < testBank.length; i = i + 2) {
+  for (i = 0; i < testBank.length; i = i + 2) {
     quesEl.textContent = testBank[i].question;
     optionA.textContent = testBank[i].answers.a;
     optionB.textContent = testBank[i].answers.b;
@@ -73,12 +75,19 @@ function askQuestions() {
     document.body.children[1].children[0].children[1].appendChild(optionB);
     document.body.children[1].children[0].children[1].appendChild(optionC);
     document.body.children[1].children[0].children[1].appendChild(optionD);
-    getAnswer();
-    console.log(start.value);
+    optionA.addEventListener("click", function () {
+      if (testBank[i + 1].correctAnswer === optionA.textContent) {
+        score++;
+        MessageEvent;
+      }
+    });
+    optionB.addEventListener("click", correct);
+    optionC.addEventListener("click", correct);
+    optionD.addEventListener("click", correct);
   }
 }
 
-function getAnswer() {}
+function correct() {}
 //output first question on start button click
 //create loop for answering questions and outputting new questions
 // display whether answer is correct or incorrect for two seconds
