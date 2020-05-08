@@ -63,8 +63,17 @@ function timer() {
 function askQuestions() {
   for (var i = 0; i < testBank.length; i = i + 2) {
     quesEl.textContent = testBank[i].question;
-
-    getanswer();
+    optionA.textContent = testBank[i].answers.a;
+    optionB.textContent = testBank[i].answers.b;
+    optionC.textContent = testBank[i].answers.c;
+    optionD.textContent = testBank[i].answers.d;
+    document.body.children[1].children[0].children[1].children[1].replaceWith(
+      optionA
+    );
+    document.body.children[1].children[0].children[1].appendChild(optionB);
+    document.body.children[1].children[0].children[1].appendChild(optionC);
+    document.body.children[1].children[0].children[1].appendChild(optionD);
+    getAnswer();
     console.log(start.value);
   }
 }
