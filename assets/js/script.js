@@ -1,6 +1,7 @@
 //create timer that starts on click of start button
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
+var Ques = document.querySelector("#questionOutput");
 var secondsLeft = 75;
 var score;
 
@@ -48,7 +49,9 @@ function timer() {
       clearInterval(timerInterval);
     }
   }, 1000);
+  askQuestions();
 }
+function askQuestions() {}
 //output first question on start button click
 //create loop for answering questions and outputting new questions
 // display whether answer is correct or incorrect for two seconds
