@@ -1,10 +1,20 @@
 //create timer that starts on click of start button
+
+//create variables and new elements
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
-var Ques = document.querySelector("#questionOutput");
+var quesEl = document.querySelector("#questionOutput");
+var optionA = document.createElement("button");
+var optionB = document.createElement("button");
+var optionC = document.createElement("button");
+var optionD = document.createElement("button");
 var secondsLeft = 75;
 var score;
 
+optionA.setAttribute("class", "btn btn-primary");
+optionB.setAttribute("class", "btn btn-primary");
+optionC.setAttribute("class", "btn btn-primary");
+optionD.setAttribute("class", "btn btn-primary");
 //array of test questions
 var testBank = [
   {
@@ -44,14 +54,22 @@ function timer() {
   var timerInterval = setInterval(function () {
     secondsLeft = secondsLeft - 1;
     timeEl.textContent = `Time Remaining: ${secondsLeft}`;
-
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
     }
   }, 1000);
   askQuestions();
 }
-function askQuestions() {}
+function askQuestions() {
+  for (var i = 0; i < testBank.length; i = i + 2) {
+    quesEl.textContent = testBank[i].question;
+
+    getanswer();
+    console.log(start.value);
+  }
+}
+
+function getAnswer() {}
 //output first question on start button click
 //create loop for answering questions and outputting new questions
 // display whether answer is correct or incorrect for two seconds
