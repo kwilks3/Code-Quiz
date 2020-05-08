@@ -2,6 +2,8 @@
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var secondsLeft = 75;
+var score;
+
 //array of test questions
 var testBank = [
   {
