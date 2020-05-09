@@ -4,52 +4,49 @@
 var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var quesEl = document.querySelector("#questionOutput");
+var ansEl = document.querySelector("#ansClick");
 var optionA = document.createElement("button");
 var optionB = document.createElement("button");
 var optionC = document.createElement("button");
 var optionD = document.createElement("button");
 var secondsLeft = 75;
 var score = 0;
-
+var userAnswer;
+var isCorrect = document.createElement("div");
 optionA.setAttribute("class", "btn btn-primary");
 optionB.setAttribute("class", "btn btn-primary");
 optionC.setAttribute("class", "btn btn-primary");
 optionD.setAttribute("class", "btn btn-primary");
-
+var openQuestion = 0;
 var i;
 //array of test questions
 var testBank = [
   {
     question: "What is the HTML tag under which one can write JavaScript code?",
-    answers: {
-      a: "<javascript>",
-      b: "<scripted>",
-      c: "<script>",
-      d: "<js>",
-    },
-    correctAnswer: "c",
+    answers: ["<javascript>", "<scripted>", "<script>", "<js>"],
+    correctAnswer: "<script>",
   },
   {
     question:
       "Which of the following is the correct syntax to display “I am the GOAT” in an alert box using JavaScript?",
-    answers: {
-      a: "alertbox(“I am the GOAT”);",
-      b: "msg(“I am the GOAT”);",
-      c: "msgbox(“I am the GOAT”);",
-      d: "alert(“I am the GOAT”)",
-    },
-    correctAnswer: "d",
+    answers: [
+      "alertbox(“I am the GOAT”);",
+      "msg(“I am the GOAT”);",
+      "msgbox(“I am the GOAT”);",
+      "alert(“I am the GOAT”)",
+    ],
+    correctAnswer: "alert(“I am the GOAT”)",
   },
   {
     question:
       "What is the correct syntax for referring to an external script called “geek.js”",
-    answers: {
-      a: "<script src=”geek.js”>;",
-      b: "<script href=”geek.js”>",
-      c: "<script ref=”geek.js”>",
-      d: "<script name=”geek.js”>",
-    },
-    correctAnswer: "a",
+    answers: [
+      "<script src=”geek.js”>;",
+      "<script href=”geek.js”>",
+      "<script ref=”geek.js”>",
+      "<script name=”geek.js”>",
+    ],
+    correctAnswer: "<script src=”geek.js”>;",
   },
 ];
 function timer() {
@@ -63,9 +60,9 @@ function timer() {
   askQuestions();
 }
 function askQuestions() {
-  for (i = 0; i < testBank.length; i = i + 2) {
+  for (i = 0; i < testBank.length; i = i + 1) {
     quesEl.textContent = testBank[i].question;
-    optionA.textContent = testBank[i].answers.a;
+    optionA.value = testBank[i].answers.a;
     optionB.textContent = testBank[i].answers.b;
     optionC.textContent = testBank[i].answers.c;
     optionD.textContent = testBank[i].answers.d;
@@ -75,19 +72,23 @@ function askQuestions() {
     document.body.children[1].children[0].children[1].appendChild(optionB);
     document.body.children[1].children[0].children[1].appendChild(optionC);
     document.body.children[1].children[0].children[1].appendChild(optionD);
-    optionA.addEventListener("click", function () {
-      if (testBank[i + 1].correctAnswer === optionA.textContent) {
-        score++;
-        MessageEvent;
-      }
-    });
-    optionB.addEventListener("click", correct);
-    optionC.addEventListener("click", correct);
-    optionD.addEventListener("click", correct);
+
+    ansEl.addEventListener("click", correct);
   }
 }
 
-function correct() {}
+function correct(event) {
+  console.log(event);
+
+  // if (testBank[openQuestion].correctAnswer === event.target.value) {
+  //   score++;
+  //   isCorrect.textContent = "Correct!";
+  //   document.body.appendChild(isCorrect);
+  // } else {
+  //   isCorrect.textContent = "Wrong!";
+  //   document.body.appendChild(isCorrect);
+  // }
+}
 //output first question on start button click
 //create loop for answering questions and outputting new questions
 // display whether answer is correct or incorrect for two seconds
