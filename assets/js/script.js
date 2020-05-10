@@ -14,9 +14,10 @@ var isCorrect = document.createElement("div");
 var submitInitials = document.createElement("button");
 var savedScores = [];
 var savedInitials = [];
+var combo = [];
 var board;
 var openQuestion = 0;
-
+var test;
 isCorrect.setAttribute(
   "style",
   "display:flex; justify-content: center; font-weight: bold;"
@@ -111,10 +112,11 @@ function endQuiz() {
   submitInitials.addEventListener("click", function (event) {
     userInitials.setAttribute("class", "hide");
     submitInitials.setAttribute("class", "hide");
+
     savedScores.push(score);
     savedInitials.push(userInitials.value.trim());
     localStorage.setItem("savedScores", savedScores);
-    localStorage.setItem("savedInitials", savedInitials);
+    localStorage.setItem("savedInitials", userInitials.value);
     scoreboard(event);
   });
 }
@@ -128,12 +130,17 @@ function scoreboard(event) {
   board.innerHTML = "";
   ansEl.setAttribute("class", "");
   ansEl.appendChild(board);
-  localStorage.getItem(savedInitials);
-  localStorage.getItem(savedScores);
+  savedScores = localStorage.getItem("savedScores");
+  savedInitials = localStorage.getItem("savedInitials");
+  combo.push(
+    localStorage.getItem("savedInitials") +
+      ": " +
+      localStorage.getItem("savedScores")
+  );
   for (var i = 0; i < savedInitials.length; i++) {
-    var scorelist = [`${savedInitials[i]}: ${savedScores[i]}`];
+    var scorelist = combo[i];
     var li = document.createElement("li");
-    li.textContent = scorelist;
+    li.innerHTML = scorelist;
     board.appendChild(li);
   }
 }
