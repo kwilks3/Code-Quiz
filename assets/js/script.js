@@ -130,14 +130,13 @@ function scoreboard(event) {
   board.innerHTML = "";
   ansEl.setAttribute("class", "");
   ansEl.appendChild(board);
-  savedScores = localStorage.getItem("savedScores");
-  savedInitials = localStorage.getItem("savedInitials");
+
   combo.push(
     localStorage.getItem("savedInitials") +
       ": " +
       localStorage.getItem("savedScores")
   );
-  for (var i = 0; i < savedInitials.length; i++) {
+  for (var i = 0; i < combo.length; i++) {
     var scorelist = combo[i];
     var li = document.createElement("li");
     li.innerHTML = scorelist;
