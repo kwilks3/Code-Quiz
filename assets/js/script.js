@@ -6,6 +6,7 @@ var start = document.querySelector("#generate");
 var quesEl = document.querySelector("#questionOutput");
 var ansEl = document.querySelector("#ansClick");
 var headEl = document.querySelector("#cardHead");
+var boardEl = document.querySelector("#leaderboard");
 var secondsLeft = 15;
 var score = 0;
 var userInitials = document.createElement("input");
@@ -14,12 +15,12 @@ var submitInitials = document.createElement("button");
 var savedScores = [];
 var savedInitials = [];
 var board;
+var openQuestion = 0;
+
 isCorrect.setAttribute(
   "style",
   "display:flex; justify-content: center; font-weight: bold;"
 );
-
-var openQuestion = 0;
 
 //array of test questions
 var testBank = [
@@ -51,12 +52,17 @@ var testBank = [
     correctAnswer: "<script src=”geek.js”>;",
   },
 ];
+
+start.addEventListener("click", timer);
+boardEl.addEventListener("click", scoreboard);
+
 function timer() {
   var timerInterval = setInterval(function () {
     secondsLeft = secondsLeft - 1;
     timeEl.textContent = `Time Remaining: ${secondsLeft}`;
-    if (secondsLeft <= 0) {
+    if (secondsLeft <= 0 || openQuestion === testBank.length) {
       clearInterval(timerInterval);
+      timeEl.textContent = "";
       endQuiz();
     }
   }, 1000);
@@ -65,19 +71,16 @@ function timer() {
 function askQuestions() {
   start.setAttribute("class", "hide");
   ansEl.innerHTML = "";
-  if (openQuestion === testBank.length) {
-    endQuiz();
-  } else {
-    for (var i = 0; i < testBank[openQuestion].answers.length; i++) {
-      quesEl.textContent = testBank[openQuestion].question;
-      var options = document.createElement("button");
-      options.value = testBank[openQuestion].answers[i];
-      options.textContent = testBank[openQuestion].answers[i];
-      options.setAttribute("class", "btn btn-primary");
-      ansEl.appendChild(options);
+  boardEl.setAttribute("class", "hide");
+  for (var i = 0; i < testBank[openQuestion].answers.length; i++) {
+    quesEl.textContent = testBank[openQuestion].question;
+    var options = document.createElement("button");
+    options.value = testBank[openQuestion].answers[i];
+    options.textContent = testBank[openQuestion].answers[i];
+    options.setAttribute("class", "btn btn-primary");
+    ansEl.appendChild(options);
 
-      options.addEventListener("click", correct);
-    }
+    options.addEventListener("click", correct);
   }
 }
 
@@ -99,37 +102,35 @@ function correct(event) {
 }
 
 function endQuiz() {
-  timeEl.textContent = "";
   ansEl.setAttribute("class", "hide");
   quesEl.textContent = `Thank you for participating. Your score is ${score}. Input your initials: `;
   submitInitials.textContent = "Submit";
   quesEl.appendChild(userInitials);
   quesEl.appendChild(submitInitials);
 
-  submitInitials.addEventListener("click", function () {
-    if (userInitials.value) {
-      scoreboard();
-    } else {
-      alert("Please input initials.");
-    }
+  submitInitials.addEventListener("click", function (event) {
+    userInitials.setAttribute("class", "hide");
+    submitInitials.setAttribute("class", "hide");
+    savedScores.push(score);
+    savedInitials.push(userInitials.value.trim());
+    localStorage.setItem("savedScores", savedScores);
+    localStorage.setItem("savedInitials", savedInitials);
+    scoreboard(event);
   });
 }
 
-function scoreboard() {
+function scoreboard(event) {
+  event.preventDefault();
+  start.setAttribute("class", "hide");
   headEl.textContent = "Scoreboard";
-  savedScores.push(score);
-  savedInitials.push(userInitials.value);
   quesEl.textContent = "Top Scores:";
-  userInitials.setAttribute("class", "hide");
-  submitInitials.setAttribute("class", "hide");
-  localStorage.setItem("savedScores", savedScores);
-  localStorage.setItem("savedInitials", savedInitials);
   board = document.createElement("ol");
+  board.innerHTML = "";
+  ansEl.setAttribute("class", "");
   ansEl.appendChild(board);
+  localStorage.getItem(savedInitials);
+  localStorage.getItem(savedScores);
   for (var i = 0; i < savedInitials.length; i++) {
-    event.preventDefault();
-
-    ansEl.setAttribute("class", "");
     var scorelist = [`${savedInitials[i]}: ${savedScores[i]}`];
     var li = document.createElement("li");
     li.textContent = scorelist;
@@ -144,5 +145,3 @@ function scoreboard() {
 //when all questions are answered or timer is 0 end quiz
 // ask for initials
 // display scoreboard with initials and scores
-
-start.addEventListener("click", timer);
