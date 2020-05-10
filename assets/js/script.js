@@ -5,7 +5,7 @@ var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var quesEl = document.querySelector("#questionOutput");
 var ansEl = document.querySelector("#ansClick");
-var secondsLeft = 75;
+var secondsLeft = 15;
 var score = 0;
 var userAnswer;
 var isCorrect = document.createElement("div");
@@ -53,7 +53,6 @@ function timer() {
     timeEl.textContent = `Time Remaining: ${secondsLeft}`;
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
-      options.setAttribute("class", "hide");
       endQuiz();
     }
   }, 1000);
@@ -97,7 +96,8 @@ function correct(event) {
 
 function endQuiz() {
   quesEl.textContent = `Thank you for participating. Your score is ${score}. Input your name `;
-  timeEl.setAttribute("class", "hide");
+  timeEl.textContent = "";
+  ansEl.setAttribute("class", "hide");
 }
 //output first question on start button click
 //create loop for answering questions and outputting new questions
