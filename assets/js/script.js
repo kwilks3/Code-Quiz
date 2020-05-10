@@ -7,8 +7,9 @@ var quesEl = document.querySelector("#questionOutput");
 var ansEl = document.querySelector("#ansClick");
 var secondsLeft = 15;
 var score = 0;
-var userAnswer;
+var userInitials = document.createElement("input");
 var isCorrect = document.createElement("div");
+var submitInitials = document.createElement("button");
 
 isCorrect.setAttribute(
   "style",
@@ -51,7 +52,7 @@ function timer() {
   var timerInterval = setInterval(function () {
     secondsLeft = secondsLeft - 1;
     timeEl.textContent = `Time Remaining: ${secondsLeft}`;
-    if (secondsLeft === 0) {
+    if (secondsLeft <= 0) {
       clearInterval(timerInterval);
       endQuiz();
     }
@@ -95,10 +96,18 @@ function correct(event) {
 }
 
 function endQuiz() {
-  quesEl.textContent = `Thank you for participating. Your score is ${score}. Input your name `;
   timeEl.textContent = "";
   ansEl.setAttribute("class", "hide");
+  quesEl.textContent = `Thank you for participating. Your score is ${score}. Input your initials: `;
+  submitInitials.textContent = "Submit";
+  quesEl.appendChild(userInitials);
+  quesEl.appendChild(submitInitials);
+
+  submitInitials.addEventListener("click", scoreboard);
 }
+
+function scoreboard() {}
+
 //output first question on start button click
 //create loop for answering questions and outputting new questions
 // display whether answer is correct or incorrect for two seconds
