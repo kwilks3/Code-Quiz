@@ -11,6 +11,11 @@ var score = 0;
 var userAnswer;
 var isCorrect = document.createElement("div");
 
+isCorrect.setAttribute(
+  "style",
+  "display:flex; justify-content: center; font-weight: bold;"
+);
+
 var openQuestion = 0;
 var i;
 //array of test questions
@@ -74,12 +79,13 @@ function correct(event) {
     score++;
     isCorrect.textContent = "Correct!";
   } else {
-    isCorrect.textContent = "Wrong!";
+    isCorrect.textContent = "Wrong! (-5 seconds)";
+    secondsLeft = secondsLeft - 5;
   }
 
   setTimeout(function () {
     isCorrect.textContent = "";
-  }, 500);
+  }, 1000);
   document.body.appendChild(isCorrect);
   openQuestion++;
   askQuestions();
