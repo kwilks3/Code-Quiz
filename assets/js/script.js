@@ -5,18 +5,12 @@ var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var quesEl = document.querySelector("#questionOutput");
 var ansEl = document.querySelector("#ansClick");
-var optionA = document.createElement("button");
-var optionB = document.createElement("button");
-var optionC = document.createElement("button");
-var optionD = document.createElement("button");
+
 var secondsLeft = 75;
 var score = 0;
 var userAnswer;
 var isCorrect = document.createElement("div");
-optionA.setAttribute("class", "btn btn-primary");
-optionB.setAttribute("class", "btn btn-primary");
-optionC.setAttribute("class", "btn btn-primary");
-optionD.setAttribute("class", "btn btn-primary");
+
 var openQuestion = 0;
 var i;
 //array of test questions
@@ -60,34 +54,35 @@ function timer() {
   askQuestions();
 }
 function askQuestions() {
-  for (i = 0; i < testBank.length; i = i + 1) {
-    quesEl.textContent = testBank[i].question;
-    optionA.value = testBank[i].answers.a;
-    optionB.textContent = testBank[i].answers.b;
-    optionC.textContent = testBank[i].answers.c;
-    optionD.textContent = testBank[i].answers.d;
-    document.body.children[1].children[0].children[1].children[1].replaceWith(
-      optionA
-    );
-    document.body.children[1].children[0].children[1].appendChild(optionB);
-    document.body.children[1].children[0].children[1].appendChild(optionC);
-    document.body.children[1].children[0].children[1].appendChild(optionD);
+  start.setAttribute("class", "hide");
+  ansEl.innerHTML = "";
+  quesEl.textContent = testBank[openQuestion].question;
 
-    ansEl.addEventListener("click", correct);
+  for (i = 0; i < testBank[openQuestion].answers.length; i++) {
+    var options = document.createElement("button");
+    options.value = testBank[openQuestion].answers[i];
+    options.textContent = testBank[openQuestion].answers[i];
+    options.setAttribute("class", "btn btn-primary");
+    ansEl.appendChild(options);
+
+    options.addEventListener("click", correct);
   }
 }
 
 function correct(event) {
-  console.log(event);
+  if (testBank[openQuestion].correctAnswer === event.target.value) {
+    score++;
+    isCorrect.textContent = "Correct!";
+  } else {
+    isCorrect.textContent = "Wrong!";
+  }
 
-  // if (testBank[openQuestion].correctAnswer === event.target.value) {
-  //   score++;
-  //   isCorrect.textContent = "Correct!";
-  //   document.body.appendChild(isCorrect);
-  // } else {
-  //   isCorrect.textContent = "Wrong!";
-  //   document.body.appendChild(isCorrect);
-  // }
+  setTimeout(function () {
+    isCorrect.textContent = "";
+  }, 500);
+  document.body.appendChild(isCorrect);
+  openQuestion++;
+  askQuestions();
 }
 //output first question on start button click
 //create loop for answering questions and outputting new questions
