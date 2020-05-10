@@ -53,6 +53,8 @@ function timer() {
     timeEl.textContent = `Time Remaining: ${secondsLeft}`;
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
+      options.setAttribute("class", "hide");
+      endQuiz();
     }
   }, 1000);
   askQuestions();
@@ -60,7 +62,7 @@ function timer() {
 function askQuestions() {
   start.setAttribute("class", "hide");
   ansEl.innerHTML = "";
-  if (openQuestion === testBank.length || secondsLeft === 0) {
+  if (openQuestion === testBank.length) {
     endQuiz();
   } else {
     for (i = 0; i < testBank[openQuestion].answers.length; i++) {
@@ -95,6 +97,7 @@ function correct(event) {
 
 function endQuiz() {
   quesEl.textContent = `Thank you for participating. Your score is ${score}. Input your name `;
+  timeEl.setAttribute("class", "hide");
 }
 //output first question on start button click
 //create loop for answering questions and outputting new questions
