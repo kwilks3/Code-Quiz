@@ -5,7 +5,6 @@ var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var quesEl = document.querySelector("#questionOutput");
 var ansEl = document.querySelector("#ansClick");
-
 var secondsLeft = 75;
 var score = 0;
 var userAnswer;
@@ -61,16 +60,19 @@ function timer() {
 function askQuestions() {
   start.setAttribute("class", "hide");
   ansEl.innerHTML = "";
-  quesEl.textContent = testBank[openQuestion].question;
+  if (openQuestion === testBank.length || secondsLeft === 0) {
+    endQuiz();
+  } else {
+    for (i = 0; i < testBank[openQuestion].answers.length; i++) {
+      quesEl.textContent = testBank[openQuestion].question;
+      var options = document.createElement("button");
+      options.value = testBank[openQuestion].answers[i];
+      options.textContent = testBank[openQuestion].answers[i];
+      options.setAttribute("class", "btn btn-primary");
+      ansEl.appendChild(options);
 
-  for (i = 0; i < testBank[openQuestion].answers.length; i++) {
-    var options = document.createElement("button");
-    options.value = testBank[openQuestion].answers[i];
-    options.textContent = testBank[openQuestion].answers[i];
-    options.setAttribute("class", "btn btn-primary");
-    ansEl.appendChild(options);
-
-    options.addEventListener("click", correct);
+      options.addEventListener("click", correct);
+    }
   }
 }
 
@@ -89,6 +91,10 @@ function correct(event) {
   document.body.appendChild(isCorrect);
   openQuestion++;
   askQuestions();
+}
+
+function endQuiz() {
+  quesEl.textContent = `Thank you for participating. Your score is ${score}. Input your name `;
 }
 //output first question on start button click
 //create loop for answering questions and outputting new questions
