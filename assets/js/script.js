@@ -79,7 +79,7 @@ function correct(event) {
     score++;
     isCorrect.textContent = "Correct!";
   } else {
-    isCorrect.textContent = "Wrong!";
+    isCorrect.textContent = "Wrong! (-5 seconds)";
     secondsLeft = secondsLeft - 5;
   }
 
