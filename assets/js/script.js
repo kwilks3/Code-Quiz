@@ -13,13 +13,14 @@ var isCorrect = document.createElement("div");
 var submitInitials = document.createElement("button");
 var savedScores = [];
 var savedInitials = [];
+var board;
 isCorrect.setAttribute(
   "style",
   "display:flex; justify-content: center; font-weight: bold;"
 );
 
 var openQuestion = 0;
-var i;
+
 //array of test questions
 var testBank = [
   {
@@ -67,7 +68,7 @@ function askQuestions() {
   if (openQuestion === testBank.length) {
     endQuiz();
   } else {
-    for (i = 0; i < testBank[openQuestion].answers.length; i++) {
+    for (var i = 0; i < testBank[openQuestion].answers.length; i++) {
       quesEl.textContent = testBank[openQuestion].question;
       var options = document.createElement("button");
       options.value = testBank[openQuestion].answers[i];
@@ -118,8 +119,22 @@ function scoreboard() {
   headEl.textContent = "Scoreboard";
   savedScores.push(score);
   savedInitials.push(userInitials.value);
+  quesEl.textContent = "Top Scores:";
+  userInitials.setAttribute("class", "hide");
+  submitInitials.setAttribute("class", "hide");
   localStorage.setItem("savedScores", savedScores);
   localStorage.setItem("savedInitials", savedInitials);
+  board = document.createElement("ol");
+  ansEl.appendChild(board);
+  for (var i = 0; i < savedInitials.length; i++) {
+    event.preventDefault();
+
+    ansEl.setAttribute("class", "");
+    var scorelist = [`${savedInitials[i]}: ${savedScores[i]}`];
+    var li = document.createElement("li");
+    li.textContent = scorelist;
+    board.appendChild(li);
+  }
 }
 
 //output first question on start button click
