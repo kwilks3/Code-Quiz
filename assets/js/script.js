@@ -5,12 +5,14 @@ var timeEl = document.querySelector("#time");
 var start = document.querySelector("#generate");
 var quesEl = document.querySelector("#questionOutput");
 var ansEl = document.querySelector("#ansClick");
+var headEl = document.querySelector("#cardHead");
 var secondsLeft = 15;
 var score = 0;
 var userInitials = document.createElement("input");
 var isCorrect = document.createElement("div");
 var submitInitials = document.createElement("button");
-
+var savedScores = [];
+var savedInitials = [];
 isCorrect.setAttribute(
   "style",
   "display:flex; justify-content: center; font-weight: bold;"
@@ -103,10 +105,22 @@ function endQuiz() {
   quesEl.appendChild(userInitials);
   quesEl.appendChild(submitInitials);
 
-  submitInitials.addEventListener("click", scoreboard);
+  submitInitials.addEventListener("click", function () {
+    if (userInitials.value) {
+      scoreboard();
+    } else {
+      alert("Please input initials.");
+    }
+  });
 }
 
-function scoreboard() {}
+function scoreboard() {
+  headEl.textContent = "Scoreboard";
+  savedScores.push(score);
+  savedInitials.push(userInitials.value);
+  localStorage.setItem("savedScores", savedScores);
+  localStorage.setItem("savedInitials", savedInitials);
+}
 
 //output first question on start button click
 //create loop for answering questions and outputting new questions
