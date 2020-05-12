@@ -73,15 +73,19 @@ function askQuestions() {
   start.setAttribute("class", "hide");
   ansEl.innerHTML = "";
   boardEl.setAttribute("class", "hide");
-  for (var i = 0; i < testBank[openQuestion].answers.length; i++) {
-    quesEl.textContent = testBank[openQuestion].question;
-    var options = document.createElement("button");
-    options.value = testBank[openQuestion].answers[i];
-    options.textContent = testBank[openQuestion].answers[i];
-    options.setAttribute("class", "btn btn-primary");
-    ansEl.appendChild(options);
+  if (openQuestion === testBank) {
+    endQuiz();
+  } else {
+    for (var i = 0; i < 4; i++) {
+      quesEl.textContent = testBank[openQuestion].question;
+      var options = document.createElement("button");
+      options.value = testBank[openQuestion].answers[i];
+      options.textContent = testBank[openQuestion].answers[i];
+      options.setAttribute("class", "btn btn-primary");
+      ansEl.appendChild(options);
 
-    options.addEventListener("click", correct);
+      options.addEventListener("click", correct);
+    }
   }
 }
 
@@ -99,6 +103,7 @@ function correct(event) {
   }, 1000);
   document.body.appendChild(isCorrect);
   openQuestion++;
+
   askQuestions();
 }
 
@@ -114,9 +119,9 @@ function endQuiz() {
     submitInitials.setAttribute("class", "hide");
 
     savedScores.push(score);
-    savedInitials.push(userInitials.value.trim());
+    savedInitials.push(JSON.stringify(userInitials.value.trim()));
     localStorage.setItem("savedScores", savedScores);
-    localStorage.setItem("savedInitials", userInitials.value);
+    localStorage.setItem("savedInitials", savedInitials);
     scoreboard(event);
   });
 }
@@ -132,7 +137,7 @@ function scoreboard(event) {
   ansEl.appendChild(board);
 
   combo.push(
-    localStorage.getItem("savedInitials") +
+    JSON.parse(localStorage.getItem("savedInitials")) +
       ": " +
       localStorage.getItem("savedScores")
   );
