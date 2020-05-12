@@ -14,7 +14,7 @@ var isCorrect = document.createElement("div");
 var submitInitials = document.createElement("button");
 var savedScores = [];
 var savedInitials = [];
-var scorelist = [];
+
 var combo = [];
 var board;
 var openQuestion = 0;
@@ -143,9 +143,8 @@ function scoreboard(event) {
       localStorage.getItem("savedScores")
   );
   for (var i = 0; i < combo.length; i++) {
-    scorelist.push(combo[i]);
     var li = document.createElement("li");
-    li.innerHTML = scorelist[i];
+    li.innerHTML = combo[i];
     board.appendChild(li);
   }
 }
