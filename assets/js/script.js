@@ -12,8 +12,6 @@ var score = 0;
 var userInitials = document.createElement("input");
 var isCorrect = document.createElement("div");
 var submitInitials = document.createElement("button");
-var savedScores = [];
-var savedInitials = [];
 
 var combo = [];
 var board;
@@ -80,10 +78,12 @@ function askQuestions() {
     for (var i = 0; i < 4; i++) {
       quesEl.textContent = testBank[openQuestion].question;
       var options = document.createElement("button");
+      var lineItem = document.createElement("div");
       options.value = testBank[openQuestion].answers[i];
       options.textContent = testBank[openQuestion].answers[i];
-      options.setAttribute("class", "btn btn-primary");
-      ansEl.appendChild(options);
+      lineItem.setAttribute("class", "m-3 ");
+      lineItem.appendChild(options);
+      ansEl.appendChild(lineItem);
 
       options.addEventListener("click", correct);
     }
@@ -119,16 +119,15 @@ function endQuiz() {
     userInitials.setAttribute("class", "hide");
     submitInitials.setAttribute("class", "hide");
 
-    savedScores.push(score);
-    savedInitials.push(JSON.stringify(userInitials.value.trim()));
-    localStorage.setItem("savedScores", savedScores);
-    localStorage.setItem("savedInitials", savedInitials);
-    scoreboard(event);
+    var scoresObject = { initials: userInitials.value.trim(), score: score };
+    var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+    highscores.push(scoresObject);
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+    scoreboard();
   });
 }
 
-function scoreboard(event) {
-  event.preventDefault();
+function scoreboard() {
   start.setAttribute("class", "hide");
   headEl.textContent = "Scoreboard";
   quesEl.textContent = "Top Scores:";
@@ -136,15 +135,13 @@ function scoreboard(event) {
   board.innerHTML = "";
   ansEl.setAttribute("class", "");
   ansEl.appendChild(board);
-
-  combo.push(
-    JSON.parse(localStorage.getItem("savedInitials")) +
-      ": " +
-      localStorage.getItem("savedScores")
-  );
-  for (var i = 0; i < combo.length; i++) {
+  var highscores = JSON.parse(localStorage.getItem("highscores"));
+  highscores.sort(function (a, b) {
+    return b.score - a.score;
+  });
+  for (var i = 0; i < highscores.length; i++) {
     var li = document.createElement("li");
-    li.innerHTML = combo[i];
+    li.innerHTML = `${highscores[i].initials}: ${highscores[i].score}`;
     board.appendChild(li);
   }
 }
