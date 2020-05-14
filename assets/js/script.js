@@ -139,6 +139,7 @@ function scoreboard() {
   highscores.sort(function (a, b) {
     return b.score - a.score;
   });
+  boardEl.setAttribute("style", "display:none");
   for (var i = 0; i < highscores.length; i++) {
     var li = document.createElement("li");
     li.innerHTML = `${highscores[i].initials}: ${highscores[i].score}`;
